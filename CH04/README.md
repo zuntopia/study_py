@@ -1,6 +1,6 @@
 # Chapter 04: 입/출력
 
-## 1. 함수의 입/출력
+## 1. 함수를 이용한 입/출력
 > 이 장은 합수를 다루는 것을 설명합니다.  
 > 이 장에서 우리는 다음과 같이 명칭을 정합니다.
 
@@ -183,4 +183,34 @@ if __name__=='__main__':
     l_print = lambda x: [a for a in range(x)]
     print(l_print(5))
 
+```
+
+## User 가 직접 수행하는 입/출력
+* input()을 이용하여 입력이 가능합니다.
+```python ch04-11.py
+result = input("type here: ")
+print(result+" world")
+```
+
+* input() 으로 들어오는 값은 string 입니다. 다른 타입으로는 형변환이 필요합니다.
+```python ch04-12.py
+result = input("type number: ")
+print(result)
+print(type(result))
+print(result+1)
+```
+
+* print() 는 화면에 출력하는 역할을 합니다.
+  > python2 에서는 print(var), print var 모두 가능했지만, python3에서는 print(var)만 가능합니다.
+  * print함수 내부에서 ,로 분리된 경우만 띄어쓰기 지원이 됩니다.
+  * 또는 함수 종료에 대한 지정을 통해서 한줄로 출력이 가능합니다.
+```python ch04-13.py
+print("hello" "world")
+print("hello"+"world")
+print("hello", "world")
+
+for i in range(0,5):
+    print (i)
+for i in range(6,10):
+    print(i, end=" ")
 ```
