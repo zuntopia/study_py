@@ -214,3 +214,78 @@ for i in range(0,5):
 for i in range(6,10):
     print(i, end=" ")
 ```
+
+## File 을 이용한 입/출력
+> file 입/출력 시 파일의 목적이나 손상 등을 방지하기 위해 다음 형태를 이용합니다.
+
+|Read|Write|Append|
+|-|-|-|
+|r|w|a|
+
+* python에서는 open() 을 통해 파일 소켓을 열고, 반환값으로 cursor를 가져옵니다. 그리고 close() 를 통해 닫을 수 있습니다.
+* 절대경로를 지정하지 않으면 헌재 위치를 기준으로 상대경로로 적용됩니다.
+```python ch04-21.py
+import os
+my_file=open(os.getcwd()+'/CH04/fileio/newfile1', 'w')
+my_file.close()
+```
+
+* 파일에 쓸 때는 cursor의 write() 함수를 이용합니다.
+  * `\n`을 명시적으로 입력하지 않으면 줄바꿈이 되지 않습니다.
+```python ch04-22.py
+import os
+f = open(os.getcwd()+'/CH04/fileio/newfile2', 'w')
+for i in range(1,5):
+    f.write("line %s\n", i)
+
+for j in range(6,10):
+    f.write("line %s ", j)
+f.close()
+```
+
+* 파일을 읽을 때는 'r' 를 이용합니다.
+  * 줄 단위로 읽을 때는 readline() 을 씁니다.
+  * 전체를 줄 단위로 미리 읽을 때는 readlines() 를 씁니다.
+  * 전체를 한번에 버퍼에 넣을 때는 read() 를 씁니다.
+```python ch04-23.py
+import os
+# Readline
+f1 = open(os.getcwd()+'/CH04/fileio/newfile2', 'r')
+## 잘못된 사용
+for line in f1.readline():
+    print(line)
+f1.close()
+## 올바른 사용
+f1_1 = open(os.getcwd()+'/CH04/fileio/newfile2', 'r')
+each_line = f1_1.readline()
+while each_line:
+    print(each_line)
+    each_line=f1_1.readline()
+#Readlines
+f2 = open(os.getcwd()+'/CH04/fileio/newfile2', 'r')
+all_lines = f2.readlines()
+f2.close()
+for f2l in all_lines:
+    print(f2l)
+#Read
+f3 = open(os.getcwd()+'/CH04/fileio/newfile2', 'r')
+print(f3.read())
+f3.close()
+```
+
+* 파일의 제일 뒤에 추가를 할 때  'a'를 씁니다.
+```python ch04-24.py
+import os
+f = open(os.getcwd()+'/CH04/fileio/newfile2', 'a')
+f.write('added line')
+f.close()
+```
+
+* `with`를 이용해서 편하게 이용할 수 있습니다.
+  * `with`는 내부의 종료를 보장하는 경우 사용합니다.
+```python ch04-25.py
+import os
+with open(os.getcwd()+'/CH04/fileio/withfile', 'w') as f:
+    f.write("Pythoneer")
+```
+> with는 현재 수행 단계 완료 시, 리소스 회수를 보장합니다. 이를 통해 파일 뿐 아니라 DB 컨넥션 등에서도 회수를 보장할 수 있습니다.
